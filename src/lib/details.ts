@@ -92,7 +92,7 @@ export interface Segment {
   marketingFlightNumber: string
   operatingClassOfService: string
   marketingClassOfService: string
-  seats: any[]
+  seats: Seat[]
   isETicket: boolean
   departureDateTime: string
   arrivalDateTime: string
@@ -108,6 +108,15 @@ export interface Segment {
   numberInParty: number
   elapsedMinutes: number
   hiddenStops: any[]
+}
+
+export interface Seat {
+  nameAssociationId: string
+  boardPoint: string
+  offPoint: string
+  seatNumber: string
+  seatType: string[]
+  seatStatusCode: string
 }
 
 export interface TicketingInfo {

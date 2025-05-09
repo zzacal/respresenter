@@ -1,8 +1,14 @@
 <script lang="ts">
+	import BookingDetails from "$lib/components/BookingDetails.svelte";
+	import Card from "$lib/components/Card.svelte";
+	import CustomInput from "$lib/components/CustomInput.svelte";
 	import Nest from "$lib/components/Nest.svelte";
+	import Segments from "$lib/components/Segments.svelte";
+	import Slot from "$lib/components/Slot.svelte";
 	import type { ReservationDetail } from "$lib/details";
+  import "@aurodesignsystem/auro-button";
 
-  let conf: string = "QWUGCS";
+  let conf: string = "PRRJVR";
   let details: ReservationDetail[] = [];
   
   async function handleSearch() {
@@ -15,28 +21,65 @@
     });
     details = await response.json() as ReservationDetail[];
   }
-</script>
-<form>
-  Conirmation Code <br />
-  <input type="text" bind:value={conf}/> 
-  <button type="submit" on:click={handleSearch}>🔍</button>
-</form>
 
-{#each details as detail}
-  <div class="result">
-    <Nest value={detail}/>
+  async function handleKeypress(e: KeyboardEvent) {
+    console.log(e);
+    if(e.code === "Enter") {
+      await handleSearch()
+    }
+  }
+
+</script>
+
+<div class="form-container">
+  <form>
+    <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf} >
+      <Slot name="label">CONF CODE</Slot>
+      <Slot name="helptext">Enter the confirmation code</Slot>
+    </CustomInput>
+    
+    <auro-button aria-label="wifi" role="button" tabindex="0" on:click={handleSearch} on:keydown={handleKeypress}>
+      Search
+      <auro-icon customColor category="in-flight" name="wifi" slot="icon"></auro-icon>
+    </auro-button>  
+  </form>
+</div>
+
+{conf}
+{#each details as {bookingDetails, segments, ...detail}}
+<div class="result">
+  <div class="card-row">
+    <Card>
+      <BookingDetails data={bookingDetails} />
+    </Card>
   </div>
+
+  <div class="card-row">
+    <Card>
+      <Segments segments={segments}/>
+    </Card>
+  </div>
+
+  <Card>
+    <Nest value={detail}/>
+  </Card>
+</div>
 {/each}
 
 <style lang="scss">
-  form {
+  .form-container {
     text-align: center;
-    margin: 1rem 0;
+    margin: 3rem 0 1rem;
+    form {
+      display: inline-block;
+    }
   }
+
   .result {
-    background-color: bbb;
-    border: 1px solid black;
-    border-radius: 1rem;
-    padding: .5rem .5rem .5rem 0;
+    padding: 1rem;
+
+    .card-row {
+      margin-bottom: 2rem;
+    }
   }
 </style>

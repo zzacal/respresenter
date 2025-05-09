@@ -37,5 +37,11 @@
     "typescript-eslint": "^8.20.0",
     "vite": "^6.2.6",
     "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "@aurodesignsystem/auro-button": "^9.3.3",
+    "@aurodesignsystem/auro-formkit": "^3.2.8",
+    "@aurodesignsystem/design-tokens": "^5.14.0",
+    "@aurodesignsystem/webcorestylesheets": "^6.5.0"
   }
 }
