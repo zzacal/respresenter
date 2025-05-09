@@ -3,6 +3,7 @@
 	import Card from "$lib/components/Card.svelte";
 	import CustomInput from "$lib/components/CustomInput.svelte";
 	import Nest from "$lib/components/Nest.svelte";
+	import Passengers from "$lib/components/Passengers.svelte";
 	import Segments from "$lib/components/Segments.svelte";
 	import Slot from "$lib/components/Slot.svelte";
 	import type { ReservationDetail } from "$lib/details";
@@ -31,6 +32,8 @@
 
 </script>
 
+<h1>Reservation Search</h1>
+
 <div class="form-container">
   <form>
     <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf} >
@@ -45,19 +48,18 @@
   </form>
 </div>
 
-{conf}
-{#each details as {bookingDetails, segments, ...detail}}
+{#each details as {bookingDetails, segments, passengers, ...detail}}
 <div class="result">
   <div class="card-row">
-    <Card>
       <BookingDetails data={bookingDetails} />
-    </Card>
   </div>
 
   <div class="card-row">
-    <Card>
       <Segments segments={segments}/>
-    </Card>
+  </div>
+
+  <div class="card-row">
+      <Passengers passengers={passengers} />
   </div>
 
   <Card>
@@ -67,6 +69,9 @@
 {/each}
 
 <style lang="scss">
+  h1 {
+    text-align: center;
+  }
   .form-container {
     text-align: center;
     margin: 3rem 0 1rem;

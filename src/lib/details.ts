@@ -1,4 +1,4 @@
-export interface ReservationDetail {
+export type ReservationDetail = {
   numberInParty: number
   numberOfInfants: number
   isCodeshare: boolean
@@ -16,13 +16,13 @@ export interface ReservationDetail {
   emailAddresses: any[]
 }
 
-export interface GroupBooking {
+export type GroupBooking = {
   isGroupBooking: boolean
   numberInGroup: number
   numberOfSeatsRemaining: number
 }
 
-export interface BookingDetails {
+export type BookingDetails = {
   recordLocator: string
   creationTimestamp: string
   creationAgentID: string
@@ -30,7 +30,7 @@ export interface BookingDetails {
   estimatedPurgeTimestamp: string
 }
 
-export interface Passenger {
+export type Passenger = {
   id: string
   nameAssociationId: string
   nameRefNumber: string
@@ -40,12 +40,12 @@ export interface Passenger {
   apisDocuments: ApisDocuments
   loyaltyInfo: any[]
   bagTags: any[]
-  ancillaryServices: any[]
+  ancillaryServices: {[key: string]: string}[]
   totalAmount: number
   reissueDifferenceAmount: number
 }
 
-export interface ServiceRequest {
+export type ServiceRequest = {
   id: string
   type: string
   serviceCode: string
@@ -57,11 +57,11 @@ export interface ServiceRequest {
   ssrType: string
 }
 
-export interface ApisDocuments {
+export type ApisDocuments = {
   travelDocuments: TravelDocument[]
 }
 
-export interface TravelDocument {
+export type TravelDocument = {
   id: string
   firstName: string
   middleName: string
@@ -73,7 +73,7 @@ export interface TravelDocument {
   entryType: string
 }
 
-export interface Segment {
+export type Segment = {
   id: string
   sequence: number
   departureAirport: string
@@ -110,7 +110,7 @@ export interface Segment {
   hiddenStops: any[]
 }
 
-export interface Seat {
+export type Seat = {
   nameAssociationId: string
   boardPoint: string
   offPoint: string
@@ -119,7 +119,7 @@ export interface Seat {
   seatStatusCode: string
 }
 
-export interface TicketingInfo {
+export type TicketingInfo = {
   alreadyTicketedList: AlreadyTicketedList[]
   ticketDetails: TicketDetail[]
   vcrAssociationDetails: VcrAssociationDetail[]
@@ -127,13 +127,13 @@ export interface TicketingInfo {
   futureTicketing: any[]
 }
 
-export interface AlreadyTicketedList {
+export type AlreadyTicketedList = {
   id: string
   index: string
   code: string
 }
 
-export interface TicketDetail {
+export type TicketDetail = {
   id: string
   index: string
   elementId: string
@@ -149,7 +149,7 @@ export interface TicketDetail {
   isEMD: boolean
 }
 
-export interface VcrAssociationDetail {
+export type VcrAssociationDetail = {
   nameAssocId: string
   airlineAccountingCode: string
   ticketNumber: string
@@ -157,25 +157,25 @@ export interface VcrAssociationDetail {
   couponNumber: string
 }
 
-export interface TicketingTimeLimit {
+export type TicketingTimeLimit = {
   ticketTimeLimit: string
 }
 
-export interface ReceivedFrom {
+export type ReceivedFrom = {
   name: string
 }
 
-export interface Address {
+export type Address = {
   addressLines: AddressLine[]
 }
 
-export interface AddressLine {
+export type AddressLine = {
   id: string
   type: string
   text: string
 }
 
-export interface PhoneField {
+export type PhoneField = {
   id: string
   sequence: number
   workGroup: string
@@ -185,14 +185,14 @@ export interface PhoneField {
   parsedValue: string
 }
 
-export interface Remark {
+export type Remark = {
   index: string
   id: string
   type: string
   remarkLines: string[]
 }
 
-export interface GenericServiceRequest {
+export type GenericServiceRequest = {
   id: string
   type: string
   serviceCode: string

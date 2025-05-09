@@ -14,37 +14,36 @@
 </script>
 
 <h2>Segments</h2>
-{#each segments as 
-  {
-    id, 
-    departureAirport, 
-    arrivalAirport, 
-    operatingAirlineShortName, 
-    operatingAirlineCode, 
-    operatingFlightNumber, 
-    operatingClassOfService, 
-    seats,
-    hiddenStops,
-    serviceRequests,
-    ...segment}
-  }
+  {#each segments as 
+    {
+      departureAirport, 
+      arrivalAirport, 
+      operatingAirlineShortName, 
+      operatingAirlineCode, 
+      operatingFlightNumber, 
+      operatingClassOfService, 
+      seats,
+      hiddenStops,
+      serviceRequests,
+      ...segment}
+    }
 
-  <h3>{departureAirport} -> {arrivalAirport} | {operatingAirlineShortName} {operatingAirlineCode}{operatingFlightNumber} | {operatingClassOfService}</h3>
-  <strong>ID: {id}</strong>
-  <Diel keyvals={segment}/>
+    <Card>  
+      <h3>{departureAirport} -> {arrivalAirport} | {operatingAirlineShortName} {operatingAirlineCode}{operatingFlightNumber} | {operatingClassOfService}</h3>
+      <Diel keyvals={segment}/>
 
-  <div class="seats">
-    {#each seats as {seatNumber, ...seat}}
-    <div class="seat">
-      <Card>
-        <h5>{seatNumber}</h5>
-        <Diel keyvals={seat}/>
-      </Card>
-    </div>
-    {/each}
-  </div>
-{/each}
-
+      <div class="seats">
+        {#each seats as {seatNumber, ...seat}}
+        <div class="seat">
+          <Card>
+            <h5>{seatNumber}</h5>
+            <Diel keyvals={seat}/>
+          </Card>
+        </div>
+        {/each}
+      </div>
+    </Card>
+  {/each}
 <style lang="scss">
   .seats {
     display: flex;

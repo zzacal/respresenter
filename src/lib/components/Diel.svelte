@@ -17,7 +17,17 @@ function capitalize(word: string) {
 
 <dl>
   {#each Object.entries(keyvals) as [key, val]}
-    <dt>{toCapitalizedWords(key)}</dt><dd>{val}</dd>
+    <dt>{toCapitalizedWords(key)}</dt>
+    <dd>
+      {#if Array.isArray(val)}
+        {#each val as ival, i}
+          {ival}
+          <br />
+        {/each}
+      {:else}
+        {val}
+      {/if}
+    </dd>
   {/each}
 </dl>
 
@@ -26,7 +36,7 @@ function capitalize(word: string) {
     font-size: .8rem;
   }
   dd {
-    margin: 0 0 1rem;
+    margin: 0 0 .35rem;
     font-size: 1.2rem;
   }
 </style>
