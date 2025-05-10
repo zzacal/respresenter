@@ -4,6 +4,7 @@
 	import CustomInput from "$lib/components/CustomInput.svelte";
 	import Nest from "$lib/components/Nest.svelte";
 	import Passengers from "$lib/components/Passengers.svelte";
+	import Remarks from "$lib/components/Remarks.svelte";
 	import Segments from "$lib/components/Segments.svelte";
 	import Slot from "$lib/components/Slot.svelte";
 	import type { ReservationDetail } from "$lib/details";
@@ -11,8 +12,10 @@
 
   let conf: string = "PRRJVR";
   let details: ReservationDetail[] = [];
+  let searching: boolean | undefined;
   
   async function handleSearch() {
+    searching = true;
     const response = await fetch("/api/reservation/", {
       method: "POST",
       body: JSON.stringify({conf}),
@@ -21,6 +24,7 @@
 			}
     });
     details = await response.json() as ReservationDetail[];
+    searching = undefined;
   }
 
   async function handleKeypress(e: KeyboardEvent) {
@@ -41,14 +45,21 @@
       <Slot name="helptext">Enter the confirmation code</Slot>
     </CustomInput>
     
-    <auro-button aria-label="wifi" role="button" tabindex="0" on:click={handleSearch} on:keydown={handleKeypress}>
+    <auro-button 
+      loading={searching}
+      on:click={handleSearch}
+      on:keydown={handleKeypress}
+      aria-label="search"
+      role="button"
+      tabindex="0"
+    >
       Search
       <auro-icon customColor category="in-flight" name="wifi" slot="icon"></auro-icon>
     </auro-button>  
   </form>
 </div>
 
-{#each details as {bookingDetails, segments, passengers, ...detail}}
+{#each details as {bookingDetails, segments, passengers, remarks, ...detail}}
 <div class="result">
   <div class="card-row">
       <BookingDetails data={bookingDetails} />
@@ -60,6 +71,10 @@
 
   <div class="card-row">
       <Passengers passengers={passengers} />
+  </div>
+
+  <div class="card-row">
+    <Remarks remarks={remarks} />
   </div>
 
   <Card>
