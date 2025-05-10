@@ -4,6 +4,7 @@
 	import Nest from "./Nest.svelte";
 	import Card from "./Card.svelte";
 	import Diel from "./Diel.svelte";
+	import CollapsibleCard from "./CollapsibleCard.svelte";
 
   type SegmentsProp = {
     segments: Segment[]
@@ -28,8 +29,7 @@
       ...segment}
     }
 
-    <Card>  
-      <h3>{departureAirport} -> {arrivalAirport} | {operatingAirlineShortName} {operatingAirlineCode}{operatingFlightNumber} | {operatingClassOfService}</h3>
+    <CollapsibleCard title={`${departureAirport} -> ${arrivalAirport} | ${operatingAirlineShortName} ${operatingAirlineCode}${operatingFlightNumber} | ${operatingClassOfService}`}>
       <Diel keyvals={segment}/>
 
       <div class="seats">
@@ -42,7 +42,7 @@
         </div>
         {/each}
       </div>
-    </Card>
+    </CollapsibleCard>
   {/each}
 <style lang="scss">
   .seats {

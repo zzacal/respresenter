@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Passenger } from "$lib/details";
 	import Card from "./Card.svelte";
+	import CollapsibleCard from "./CollapsibleCard.svelte";
 	import Diel from "./Diel.svelte";
 
   type PassengersProps = {
@@ -14,8 +15,7 @@
 <h2>Passengers</h2>
 
 {#each passengers as { firstName, lastName, serviceRequests, apisDocuments, ancillaryServices, ...passenger }}
-  <Card>
-    <h3>{firstName} {lastName}</h3>
+  <CollapsibleCard title={`${firstName} ${lastName}`}>
     <Diel keyvals={passenger} />
     <h4>Ancillary Services</h4>
     {#each ancillaryServices as service}    
@@ -37,7 +37,7 @@
         </Card>
       {/each}
     </div>
-  </Card>
+  </CollapsibleCard>
 {/each}
 
 <style lang="scss">
