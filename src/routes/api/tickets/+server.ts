@@ -1,13 +1,13 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { reservationClient } from "$lib/server/reservations/reservationClient";
-type ReservationRequest = {
+type TicketRequest = {
 	env: string;
-	conf: string;
+	ticketNums: string[];
 };
 export const POST: RequestHandler = async ({ url, request }) => {
-	const { env, conf } = (await request.json()) as ReservationRequest;
+	const { env, ticketNums } = (await request.json()) as TicketRequest;
 
-	const result = await reservationClient(env).getReservation(conf, true);
-	return json(result.reservationDetails);
+	const result = (await reservationClient(env).getTickets(ticketNums)).ticketDetails;
+	return json(result);
 };

@@ -23,6 +23,7 @@
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/svelte": "^5.2.4",
+    "@types/lodash": "^4.17.16",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-svelte": "^3.0.0",
@@ -42,6 +43,7 @@
     "@aurodesignsystem/auro-button": "^9.3.3",
     "@aurodesignsystem/auro-formkit": "^3.2.8",
     "@aurodesignsystem/design-tokens": "^5.14.0",
-    "@aurodesignsystem/webcorestylesheets": "^6.5.0"
+    "@aurodesignsystem/webcorestylesheets": "^6.5.0",
+    "lodash": "^4.17.21"
   }
 }

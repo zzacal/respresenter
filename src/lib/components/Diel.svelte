@@ -1,18 +1,18 @@
 <script lang="ts">
-  type DielProps = {
-    keyvals: {[key: string]: string | number | boolean | Array<string | number | boolean>}
-  }
-  let {keyvals}: DielProps = $props();
+  type DielValueable = string | number | boolean | null | undefined;
+  type Dielable = { [key: string]: DielValueable | Array<DielValueable> };
+  type DielProps = { keyvals: Dielable; };
+  let { keyvals }: DielProps = $props();
 
   function toCapitalizedWords(name: string) {
     var words = name.match(/[A-Za-z][a-z]*/g) || [];
 
     return words.map(capitalize).join(" ");
-}
+  }
 
-function capitalize(word: string) {
+  function capitalize(word: string) {
     return word.charAt(0).toUpperCase() + word.substring(1);
-}
+  }
 </script>
 
 <dl>
@@ -33,10 +33,10 @@ function capitalize(word: string) {
 
 <style lang="scss">
   dt {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
   dd {
-    margin: 0 0 .35rem;
+    margin: 0 0 0.35rem;
     font-size: 1.2rem;
   }
 </style>

@@ -16,12 +16,14 @@ export type AppSettings = {
 
 export type Env = {
   [key: string]: {
-    apim: {
-      key: string,
-      baseUrl: string,
-      appid: string
-    }
+    apim: ApimSettings
   }
+}
+
+export type ApimSettings = {
+  key: string,
+  baseUrl: string,
+  appid: string
 }
 
 let settings: AppSettings | undefined = undefined;
@@ -35,3 +37,5 @@ export async function getAppSettings(): Promise<AppSettings> {
   settings = JSON.parse(data) as AppSettings;
   return settings;
 }
+
+export const getApimSettings = async (env: string): Promise<ApimSettings> => (await getAppSettings()).envs[env].apim;

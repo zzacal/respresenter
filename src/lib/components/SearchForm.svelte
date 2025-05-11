@@ -6,9 +6,10 @@
   import '@aurodesignsystem/auro-formkit/auro-select';
   import '@aurodesignsystem/auro-formkit/auro-menu';
 	import { onMount } from "svelte";
+    import type { TicketDetail } from "$lib/tickets";
 
   export let onReservationResult: (result: ReservationDetail[]) => void;
-  export let onTicketsResult: (tickets: string) => void;
+  export let onTicketsResult: (tickets: TicketDetail[]) => void;
 
   let env: string = "";
   let conf: string = "OWAOCC";
@@ -47,7 +48,7 @@
         }
       });
 
-      const ticketResult = await ticketResponse.json() as string;
+      const ticketResult = await ticketResponse.json() as TicketDetail[];
 
       onTicketsResult(ticketResult);
     }
