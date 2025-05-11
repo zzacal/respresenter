@@ -7,7 +7,8 @@
   import '@aurodesignsystem/auro-formkit/auro-menu';
 	import { onMount } from "svelte";
 
-  export let onResult: (result: ReservationDetail[]) => void;
+  export let onReservationResult: (result: ReservationDetail[]) => void;
+  export let onTicketsResult: (tickets: string) => void;
 
   let env: string = "";
   let conf: string = "OWAOCC";
@@ -17,19 +18,38 @@
   async function getEnvironments() {
     const response = await fetch("/api/envs");
     envs = await response.json();
+    if(envs && envs.length > 0) {
+      env = envs[0];
+    }
   };
   
   async function handleSearch() {
     searching = true;
     if(env && conf) {
-      const response = await fetch("/api/reservation/", {
+      const reservationResponse = await fetch("/api/reservation/", {
         method: "POST",
         body: JSON.stringify({env, conf}),
         headers: {
           'content-type': 'application/json'
         }
       });
-      onResult(await response.json() as ReservationDetail[]);
+
+      const reservationResult = await reservationResponse.json() as ReservationDetail[];
+      onReservationResult(reservationResult);
+
+      const ticketNums = reservationResult.flatMap(r => r.ticketingInfo.ticketDetails).map(d => d.ticketNumber);
+
+      const ticketResponse = await fetch("/api/tickets/", {
+        method: "POST",
+        body: JSON.stringify({env, ticketNums}),
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+
+      const ticketResult = await ticketResponse.json() as string;
+
+      onTicketsResult(ticketResult);
     }
     searching = undefined;
   }
@@ -44,13 +64,13 @@
   onMount(getEnvironments);
 </script>
 
-{#if envs !== undefined} 
+{#if envs !== undefined && envs.length > 0} 
   <form>
     <auro-select required>
       <span slot="label">Env</span>
-      <auro-menu on:auroMenu-selectedOption={(e: any) => env = e.target.optionActive.value}>
+      <auro-menu on:auroMenu-selectedOption={(e: any) => env = e.target.optionActive.value} value={[envs[0]]}>
         {#each envs as environment}
-          <auro-menuoption value="{environment}">{environment}</auro-menuoption>
+          <auro-menuoption value="{environment}" selected>{environment}</auro-menuoption>
         {/each}
       </auro-menu>
     </auro-select>
