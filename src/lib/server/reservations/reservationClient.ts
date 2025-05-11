@@ -1,13 +1,16 @@
 import type { ReservationDetail } from "$lib/details";
 import fs from "fs";
+import { getAppSettings } from "../appsettings";
 
-export const reservationClient = (baseUrl: string, apimKey: string, appid: string) => async (conf: string, isDcsIncluded: boolean): Promise<ReservationResponse> => {
+export const reservationClient = (env: string) => async (conf: string, isDcsIncluded: boolean): Promise<ReservationResponse> => {
+  const settings = await getAppSettings();
+  const {baseUrl, key, appid} = (settings).envs[env].apim;
   const url = `${baseUrl}/aag/3/guestServices/reservations/reservation/${conf}?withDCSPassengerData=${isDcsIncluded}`;
   const response = await fetch(
     url, 
     {
       headers: {
-        "Ocp-Apim-Subscription-Key": apimKey,
+        "Ocp-Apim-Subscription-Key": key,
         "asgds-appid": appid
       } 
     });
