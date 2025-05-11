@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BookingDetails from "$lib/components/BookingDetails.svelte";
-	import Card from "$lib/components/Card.svelte";
+	import CollapsibleCard from "$lib/components/CollapsibleCard.svelte";
 	import CustomInput from "$lib/components/CustomInput.svelte";
 	import Nest from "$lib/components/Nest.svelte";
 	import Passengers from "$lib/components/Passengers.svelte";
@@ -10,7 +10,7 @@
 	import type { ReservationDetail } from "$lib/details";
   import "@aurodesignsystem/auro-button";
 
-  let conf: string = "PRRJVR";
+  let conf: string = "OWAOCC";
   let details: ReservationDetail[] = [];
   let searching: boolean | undefined;
   
@@ -61,25 +61,15 @@
 
 {#each details as {bookingDetails, segments, passengers, remarks, ...detail}}
 <div class="result">
-  <div class="card-row">
-      <BookingDetails data={bookingDetails} />
-  </div>
-
-  <div class="card-row">
-      <Segments segments={segments}/>
-  </div>
-
-  <div class="card-row">
-      <Passengers passengers={passengers} />
-  </div>
-
-  <div class="card-row">
+    <BookingDetails data={bookingDetails} />
+    <Segments segments={segments}/>
+    <Passengers passengers={passengers} />
     <Remarks remarks={remarks} />
-  </div>
 
-  <Card>
-    <Nest value={detail}/>
-  </Card>
+    <h2>Extra Info</h2>
+    <CollapsibleCard title={"Remainder"}>
+      <Nest value={detail}/>
+    </CollapsibleCard>
 </div>
 {/each}
 
