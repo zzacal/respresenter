@@ -12,7 +12,7 @@
   let env: string = "";
   let conf: string = "OWAOCC";
   let searching: boolean | undefined;
-  let envs: string[];
+  let envs: string[] | undefined;
 
   async function getEnvironments() {
     const response = await fetch("/api/envs");
@@ -21,14 +21,16 @@
   
   async function handleSearch() {
     searching = true;
-    const response = await fetch("/api/reservation/", {
-      method: "POST",
-      body: JSON.stringify({env: "qa", conf}),
-			headers: {
-				'content-type': 'application/json'
-			}
-    });
-    onResult(await response.json() as ReservationDetail[]);
+    if(env && conf) {
+      const response = await fetch("/api/reservation/", {
+        method: "POST",
+        body: JSON.stringify({env, conf}),
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+      onResult(await response.json() as ReservationDetail[]);
+    }
     searching = undefined;
   }
 
@@ -42,30 +44,44 @@
   onMount(getEnvironments);
 </script>
 
-<form>
-  <auro-select required>
-    <span slot="bib.fullscreen.headline">Bib Headline</span>
-    <span slot="label">Environment</span>
-    <auro-menu on:auroMenu-selectedOption={(e: any) => env = e.target.optionActive.value}>
-      {#each envs as environment, i}
-        <auro-menuoption value="{environment}">{environment}</auro-menuoption>
-      {/each}
-    </auro-menu>
-  </auro-select>
-  <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf} >
-    <Slot name="label">CONF CODE</Slot>
-    <Slot name="helptext">Enter the confirmation code</Slot>
-  </CustomInput>
-  
-  <auro-button 
-    loading={searching}
-    on:click={handleSearch}
-    on:keydown={handleKeypress}
-    aria-label="search"
-    role="button"
-    tabindex="0"
-  >
-    Search
-    <auro-icon customColor category="in-flight" name="wifi" slot="icon"></auro-icon>
-  </auro-button>  
-</form>
+{#if envs !== undefined} 
+  <form>
+    <auro-select required>
+      <span slot="label">Env</span>
+      <auro-menu on:auroMenu-selectedOption={(e: any) => env = e.target.optionActive.value}>
+        {#each envs as environment}
+          <auro-menuoption value="{environment}">{environment}</auro-menuoption>
+        {/each}
+      </auro-menu>
+    </auro-select>
+    <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf}>
+      <Slot name="label">CONF CODE</Slot>
+      <Slot name="helptext">Enter the confirmation code</Slot>
+    </CustomInput>
+    
+    <div class="button-fix">
+      <auro-button 
+        loading={searching}
+        on:click={handleSearch}
+        on:keydown={handleKeypress}
+        aria-label="search"
+        role="button"
+        tabindex="0"
+      >
+         🔍
+      </auro-button>
+    </div>
+  </form>
+{/if}
+
+<style lang="scss">
+  form {
+    display: flex;
+    align-items:start;
+    gap: .3rem;
+    
+    .button-fix {
+      padding: .3rem 0;
+    }
+  }
+</style>
