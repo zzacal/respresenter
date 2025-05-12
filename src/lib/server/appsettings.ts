@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const settingsPath = "./appsettings.json";
+const settingsPath = "./appsettings/appsettings.json";
 
 export type AppSettings = {
   envs: {
