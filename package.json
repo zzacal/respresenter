@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "APPSETTINGS_PATH='./appsettings/appsettings.json' vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "lint": "prettier --check . && eslint .",
     "test:unit": "vitest",
-    "test": "npm run test:unit -- --run"
+    "test": "npm run test:unit -- --run",
+    "clean": "rm -rf .svelte-kit node_modules build"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
@@ -40,10 +41,9 @@
     "vitest": "^3.0.0"
   },
   "dependencies": {
-    "@aurodesignsystem/auro-button": "^9.3.3",
-    "@aurodesignsystem/auro-formkit": "^3.2.8",
-    "@aurodesignsystem/design-tokens": "^5.14.0",
-    "@aurodesignsystem/webcorestylesheets": "^6.5.0",
     "lodash": "^4.17.21"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "*"
   }
 }

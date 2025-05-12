@@ -6,6 +6,6 @@ docker build -t respresenter:local . &&
 docker run \
   -v ./appsettings:/data/appsettings/ \
   --name=respresenter \
-  -p 5242:3000 \
+  -p 3000:3000 \
   respresenter:local
   
