@@ -28,20 +28,19 @@
   <SearchForm onReservationResult={handleReservationResult} onTicketsResult={handleTicketResult} />
 </div>
 
-{#each details as { bookingDetails, segments, passengers, remarks, ...detail }}
-<div class="result">
-  <h2>Itinerary</h2>
-  <CollapsibleCard title={`Itinerary - ${bookingDetails.recordLocator}`}>
+{#each details as { segments, passengers }}
+  <div class="result">
+    <Segments {segments} />
+    <Passengers {passengers} />
+    <!-- <CollapsibleCard title={`Itinerary - ${bookingDetails.recordLocator}`}>
       <BookingDetails data={bookingDetails} />
-      <Segments {segments} />
-      <Passengers {passengers} />
       <Remarks {remarks} />
 
       <h2>Extra Info</h2>
       <CollapsibleCard title={"Remainder"}>
         <Nest value={detail} />
       </CollapsibleCard>
-    </CollapsibleCard>
+    </CollapsibleCard> -->
   </div>
 {/each}
 
