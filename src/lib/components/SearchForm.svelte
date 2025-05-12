@@ -7,6 +7,7 @@
   import '@aurodesignsystem/auro-formkit/auro-menu';
 	import { onMount } from "svelte";
     import type { TicketDetail } from "$lib/tickets";
+    import BigButton from "./BigButton.svelte";
 
   export let onReservationResult: (result: ReservationDetail[]) => void;
   export let onTicketsResult: (tickets: TicketDetail[]) => void;
@@ -80,18 +81,19 @@
       <Slot name="helptext">Enter the confirmation code</Slot>
     </CustomInput>
     
-    <div class="button-fix">
-      <auro-button 
+      <!-- <auro-button 
         loading={searching}
-        on:click={handleSearch}
-        on:keydown={handleKeypress}
         aria-label="search"
         role="button"
         tabindex="0"
+        on:click={handleSearch}
+        on:keydown={handleKeypress}
       >
-         🔍
-      </auro-button>
-    </div>
+      </auro-button> -->
+      <BigButton label="Search"
+        loading={searching}
+        onclick={handleSearch}
+        onkeydown={handleKeypress} />
   </form>
 {/if}
 
@@ -99,10 +101,6 @@
   form {
     display: flex;
     align-items:start;
-    gap: .3rem;
-    
-    .button-fix {
-      padding: .3rem 0;
-    }
+    gap: .3rem;    
   }
 </style>
