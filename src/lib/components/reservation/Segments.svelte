@@ -1,10 +1,8 @@
 <script lang="ts">
 	import type { Segment } from "$lib/details";
-	import { json } from "@sveltejs/kit";
-	import Nest from "./Nest.svelte";
-	import Card from "./Card.svelte";
-	import Diel from "./Diel.svelte";
-	import CollapsibleCard from "./CollapsibleCard.svelte";
+	import Card from "../Card.svelte";
+	import Diel from "../Diel.svelte";
+	import CollapsibleCard from "../CollapsibleCard.svelte";
 
   type SegmentsProp = {
     segments: Segment[]

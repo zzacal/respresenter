@@ -698,7 +698,7 @@ export type Emd = {
   type: string
   serialNumber: string
   service: any
-  payment: Payment3[]
+  payment: Payment[]
   printCoupon: any
   relatedDocument: RelatedDocument
   remarks: any
@@ -1110,31 +1110,31 @@ export type Indicators3 = {
   residentDiscountSpecified: boolean
 }
 
-export type Payment3 = {
-  base: Base5
-  tax: Tax4
-  total: Total5
-  remarks: string
-  card: Card2
-  cash: any
-  check: any
-  travelDocument: any
-  voucher: any
-  governmentTravel: any
-  invoice: any
-  prepaidTicketAdvice: any
-  certficate: any
-  miscellaneous: any
-  revenueAccounting: any
-  other: any
-  id: any
-  type: string
-  sequence: string
-  code: any
-  missingPayAmtIndSpecified: boolean
-  paymentConfirmation: boolean
-  paymentConfirmationSpecified: boolean
-}
+// export type Payment3 = {
+//   base: Base5
+//   tax: Tax4
+//   total: Total5
+//   remarks: string
+//   card: Card2
+//   cash: any
+//   check: any
+//   travelDocument: any
+//   voucher: any
+//   governmentTravel: any
+//   invoice: any
+//   prepaidTicketAdvice: any
+//   certficate: any
+//   miscellaneous: any
+//   revenueAccounting: any
+//   other: any
+//   id: any
+//   type: string
+//   sequence: string
+//   code: any
+//   missingPayAmtIndSpecified: boolean
+//   paymentConfirmation: boolean
+//   paymentConfirmationSpecified: boolean
+// }
 
 export type Base5 = {
   amount: Amount19

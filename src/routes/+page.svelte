@@ -1,12 +1,12 @@
 <script lang="ts">
-  import BookingDetails from "$lib/components/BookingDetails.svelte";
+  import BookingDetails from "$lib/components/reservation/BookingDetails.svelte";
   import CollapsibleCard from "$lib/components/CollapsibleCard.svelte";
   import Nest from "$lib/components/Nest.svelte";
-  import Passengers from "$lib/components/Passengers.svelte";
-  import Remarks from "$lib/components/Remarks.svelte";
+  import Passengers from "$lib/components/reservation/Passengers.svelte";
+  import Remarks from "$lib/components/reservation/Remarks.svelte";
   import SearchForm from "$lib/components/SearchForm.svelte";
-  import Segments from "$lib/components/Segments.svelte";
-  import TicketDetails from "$lib/components/TicketDetails.svelte";
+  import Segments from "$lib/components/reservation/Segments.svelte";
+  import TicketDetails from "$lib/components/tickets/TicketDetails.svelte";
   import type { ReservationDetail } from "$lib/details";
   import type { TicketDetail } from "$lib/tickets";
   import "@aurodesignsystem/auro-button";
@@ -29,15 +29,18 @@
 </div>
 
 {#each details as { bookingDetails, segments, passengers, remarks, ...detail }}
-  <div class="result">
-    <BookingDetails data={bookingDetails} />
-    <Segments {segments} />
-    <Passengers {passengers} />
-    <Remarks {remarks} />
+<div class="result">
+  <h2>Itinerary</h2>
+  <CollapsibleCard title={`Itinerary - ${bookingDetails.recordLocator}`}>
+      <BookingDetails data={bookingDetails} />
+      <Segments {segments} />
+      <Passengers {passengers} />
+      <Remarks {remarks} />
 
-    <h2>Extra Info</h2>
-    <CollapsibleCard title={"Remainder"}>
-      <Nest value={detail} />
+      <h2>Extra Info</h2>
+      <CollapsibleCard title={"Remainder"}>
+        <Nest value={detail} />
+      </CollapsibleCard>
     </CollapsibleCard>
   </div>
 {/each}
@@ -45,9 +48,7 @@
 {#if tickets}
   <div class="result">
     <h2>Tickets</h2>
-    <CollapsibleCard title={"Tickets"}>
-      <TicketDetails details={tickets} />
-    </CollapsibleCard>
+    <TicketDetails details={tickets} />
   </div>
 {/if}
 

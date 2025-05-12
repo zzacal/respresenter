@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Passenger } from "$lib/details";
-	import Card from "./Card.svelte";
-	import CollapsibleCard from "./CollapsibleCard.svelte";
-	import Diel from "./Diel.svelte";
+	import Card from "../Card.svelte";
+	import CollapsibleCard from "../CollapsibleCard.svelte";
+	import Diel from "../Diel.svelte";
 
   type PassengersProps = {
     passengers: Passenger[]

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { Remark } from "$lib/details";
-	import Card from "./Card.svelte";
-	import CollapsibleCard from "./CollapsibleCard.svelte";
-	import Diel from "./Diel.svelte";
+	import CollapsibleCard from "../CollapsibleCard.svelte";
+	import Diel from "../Diel.svelte";
 
   type RemarksProps = {
     remarks: Remark[]
