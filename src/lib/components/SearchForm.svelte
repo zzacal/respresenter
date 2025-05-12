@@ -57,7 +57,6 @@
   }
 
   async function handleKeypress(e: KeyboardEvent) {
-    console.log(e);
     if (e.code === "Enter") {
       await handleSearch();
     }

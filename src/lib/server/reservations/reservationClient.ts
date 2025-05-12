@@ -1,6 +1,6 @@
 import type { ReservationDetail } from "$lib/details";
-import fs from "fs";
-import { getApimSettings, getAppSettings } from "../appsettings";
+// import fs from "fs";
+import { getApimSettings } from "../appsettings";
 import pkg from 'lodash';
 import type { TicketResponse } from "$lib/tickets";
 const {camelCase} = pkg;
@@ -17,7 +17,7 @@ const getReservation =
 			}
 		});
 		const content = await response.json();
-		fs.writeFileSync(`./sample_data/reservation/${conf}.json`, JSON.stringify(content));
+		// fs.writeFileSync(`./sample_data/reservation/${conf}.json`, JSON.stringify(content));
 		return content;
 	};
 
@@ -32,7 +32,7 @@ const getTickets = (env: string) => async (ticketsNums: string[]): Promise<Ticke
 		}
 	});
 	const content = await response.json();
-	fs.writeFileSync(`./sample_data/tickets/${ticketParam}.json`, JSON.stringify(content));
+	// fs.writeFileSync(`./sample_data/tickets/${ticketParam}.json`, JSON.stringify(content));
 
 	const camelized = camelizeKeys(content);
 	return camelized as TicketResponse;
