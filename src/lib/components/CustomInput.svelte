@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { AuroInput } from '@aurodesignsystem/auro-formkit/auro-input/class';
 	import type { Snippet } from 'svelte';
   type InputProps =  {
     required?: boolean, 
@@ -13,11 +12,16 @@
   const blurHandler = (e: any) => {
     value = e.target.value;
   }
-
-  AuroInput.register('custom-input');
 </script>
+<input type="text" placeholder={placeholder} required={required} value={value} onblur={blurHandler} />
 
-<custom-input placeholder={placeholder} bordered={bordered} required={required} value={value} 
-onblur={blurHandler}>
-  {@render children?.()}
-</custom-input>
+<style lang="scss">
+  @use "../../colors.scss" as colors;
+
+  input {
+    line-height: 53px;
+    border: 1px solid;
+    border-radius: .3rem;
+    padding: 0 1rem;
+  }
+</style>

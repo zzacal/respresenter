@@ -10,19 +10,20 @@
 <button type="button" {onclick} {onkeydown} class={loading ? "loading" : ""}>{label}</button>
 
 <style lang="scss">
-  @import "@aurodesignsystem/design-tokens/dist/alaska/SCSSVariables--alaska.scss";
+  @use "../../colors.scss" as colors;
+
   button {
     position: relative;
     cursor: pointer;
     height: 55px;
     padding: 0 2rem;
     border-radius: 0.3rem;
-    color: $ds-advanced-color-button-primary-text;
-    background-color: $ds-advanced-color-button-primary-background;
-    border-color: $ds-advanced-color-button-primary-border;
+    color: colors.$button-font-color;
+    background-color: colors.$button-background-color;
+    border-color: colors.$button-border-color;
     
     &.loading{
-      color: $ds-advanced-color-button-primary-background;
+      color: colors.$button-background-color;
 
       &::after {
       content: "";

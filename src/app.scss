@@ -1,9 +1,7 @@
-@import "@aurodesignsystem/design-tokens/dist/alaska/primitives--alaska.scss";
-@import "@aurodesignsystem/design-tokens/dist/alaska/SCSSVariables--alaska.scss";
-@import "@aurodesignsystem/webcorestylesheets/dist/bundled/essentials-as.css";
-
+@use "./colors.scss" as colors;
 
 body {
-  background-color: $ds-basic-color-surface-neutral-subtle;
-  font-family: $ds-basic-text-heading-lg-breakpoint-lg-font-family;
+  background-color: colors.$background-color;
+  color: colors.$font-color;
+  font-family: Arial, Helvetica, sans-serif;
 }

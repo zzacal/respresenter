@@ -1,15 +1,10 @@
 <script lang="ts">
-  import BookingDetails from "$lib/components/reservation/BookingDetails.svelte";
-  import CollapsibleCard from "$lib/components/CollapsibleCard.svelte";
-  import Nest from "$lib/components/Nest.svelte";
   import Passengers from "$lib/components/reservation/Passengers.svelte";
-  import Remarks from "$lib/components/reservation/Remarks.svelte";
   import SearchForm from "$lib/components/SearchForm.svelte";
   import Segments from "$lib/components/reservation/Segments.svelte";
   import TicketDetails from "$lib/components/tickets/TicketDetails.svelte";
   import type { ReservationDetail } from "$lib/details";
   import type { TicketDetail } from "$lib/tickets";
-  import "@aurodesignsystem/auro-button";
   let details: ReservationDetail[] = [];
 
   let tickets: TicketDetail[];
