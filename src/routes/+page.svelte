@@ -5,6 +5,7 @@
   import TicketDetails from "$lib/components/tickets/TicketDetails.svelte";
   import type { ReservationDetail } from "$lib/details";
   import type { TicketDetail } from "$lib/tickets";
+    import ServiceRequests from "$lib/components/reservation/ServiceRequests.svelte";
   let details: ReservationDetail[] = [];
 
   let tickets: TicketDetail[];
@@ -19,14 +20,13 @@
 </script>
 
 <h1>Reservation Search</h1>
-<div class="form-container">
-  <SearchForm onReservationResult={handleReservationResult} onTicketsResult={handleTicketResult} />
-</div>
+<SearchForm onReservationResult={handleReservationResult} onTicketsResult={handleTicketResult} />
 
-{#each details as { segments, passengers }}
+{#each details as { segments, passengers, genericServiceRequests }}
   <div class="result">
     <Segments {segments} />
     <Passengers {passengers} />
+    <ServiceRequests genericRequests={genericServiceRequests} passengerRequests={passengers.flatMap(p => p.serviceRequests)}/>
     <!-- <CollapsibleCard title={`Itinerary - ${bookingDetails.recordLocator}`}>
       <BookingDetails data={bookingDetails} />
       <Remarks {remarks} />
@@ -50,12 +50,6 @@
   h1 {
     text-align: center;
   }
-  .form-container {
-    text-align: center;
-    margin: 3rem auto 1rem auto;
-    width: max(20vw, 30rem);
-  }
-
   .result {
     padding: 1rem;
   }

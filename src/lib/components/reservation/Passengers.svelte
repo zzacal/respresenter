@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Passenger } from "$lib/details";
-	import Card from "../Card.svelte";
 	import CollapsibleCard from "../CollapsibleCard.svelte";
 	import Diel from "../Diel.svelte";
 
@@ -21,28 +20,5 @@
     {#each ancillaryServices as service}    
       <Diel keyvals={service} />
     {/each}
-    <h4>Service Requests</h4>
-    <div class="detail-row">
-      {#each serviceRequests as request }
-        <Card>
-          <Diel keyvals={request} />
-        </Card>
-      {/each}
-    </div>
-    <h4>Travel Docs</h4>
-    <div class="detail-row">
-      {#each apisDocuments.travelDocuments as doc }
-        <Card >
-          <Diel keyvals={doc} />
-        </Card>
-      {/each}
-    </div>
   </CollapsibleCard>
 {/each}
-
-<style lang="scss">
-  .detail-row {
-    display: flex;
-    gap: 1rem
-  }
-</style>

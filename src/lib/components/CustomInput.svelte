@@ -17,11 +17,12 @@
 
 <style lang="scss">
   @use "../../colors.scss" as colors;
+  @use "../../shapes.scss" as shapes;
 
   input {
     line-height: 53px;
-    border: 1px solid;
-    border-radius: .3rem;
+    border: 1px solid colors.$input-border-color;
+    border-radius: shapes.$border-radius;
     padding: 0 1rem;
   }
 </style>

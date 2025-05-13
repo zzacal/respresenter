@@ -5,3 +5,11 @@ body {
   color: colors.$font-color;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+h1 {
+  color: colors.$primary;
+}
+
+h2 {
+  color: colors.$secondary;
+}

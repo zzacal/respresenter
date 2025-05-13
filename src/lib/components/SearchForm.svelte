@@ -92,14 +92,20 @@
 {/if}
 
 <style lang="scss">
+  @use "../../colors.scss" as colors;
+  @use "../../shapes.scss" as shapes;
+
   form {
     display: flex;
-    align-items: start;
+    justify-content: center;
     gap: 0.3rem;
 
     select {
       height: 55px;
       padding: 0 1rem;
+      border-radius: shapes.$border-radius;
+      background-color: colors.$input-background-color;
+      border: 1px solid colors.$input-border-color;
     }
   }
 </style>

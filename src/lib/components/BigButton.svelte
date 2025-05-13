@@ -11,13 +11,14 @@
 
 <style lang="scss">
   @use "../../colors.scss" as colors;
+  @use "../../shapes.scss" as shapes;
 
   button {
     position: relative;
     cursor: pointer;
     height: 55px;
     padding: 0 2rem;
-    border-radius: 0.3rem;
+    border-radius: shapes.$border-radius;
     color: colors.$button-font-color;
     background-color: colors.$button-background-color;
     border-color: colors.$button-border-color;
