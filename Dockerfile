@@ -3,6 +3,7 @@ FROM node:22.14.0-alpine as build
 WORKDIR /usr
 COPY ["eslint.config.js", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts", "svelte.config.js", "./"]
 COPY src ./src
+COPY static ./static
 RUN npm install 
 RUN npm run build
 
