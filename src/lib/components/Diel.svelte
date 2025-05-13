@@ -32,6 +32,9 @@
 </dl>
 
 <style lang="scss">
+  dl {
+    margin-top: 0;
+  }
   dt {
     font-size: 0.8rem;
   }

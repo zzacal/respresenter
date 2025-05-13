@@ -10,7 +10,7 @@
   let { title, children }: CollapsibleCardProps = $props();
 </script>
 
-<Card>
+<Card padding="none">
   <details>
     <summary>{title}</summary>
     <div class="body">
@@ -18,3 +18,13 @@
     </div>
   </details>
 </Card>
+
+<style lang="scss">
+  summary {
+    cursor: pointer;
+    padding: 1rem;
+  }
+  .body {
+    padding: 0 1rem 1rem;
+  }
+</style>
