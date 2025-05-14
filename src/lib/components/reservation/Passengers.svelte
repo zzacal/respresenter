@@ -13,10 +13,14 @@
 
 <h2>Passengers</h2>
 
-{#each passengers as { firstName, lastName, serviceRequests, apisDocuments, ancillaryServices, ...passenger }}
+{#each passengers as { firstName, lastName, serviceRequests, apisDocuments, ancillaryServices, loyaltyInfo, ...passenger }}
   <CollapsibleCard title={`${firstName} ${lastName}`}>
     <Diel keyvals={passenger} />
-    <h4>Ancillary Services</h4>
+    <h3>Loyalty Info</h3>
+    {#each loyaltyInfo as loyalty }
+      <Diel keyvals={loyalty} />
+    {/each}
+    <h3>Ancillary Services</h3>
     {#each ancillaryServices as service}    
       <Diel keyvals={service} />
     {/each}

@@ -38,11 +38,23 @@ export type Passenger = {
   firstName: string;
   serviceRequests: ServiceRequest[];
   apisDocuments: ApisDocuments;
-  loyaltyInfo: any[];
+  loyaltyInfo: loyaltyInfo[];
   bagTags: any[];
   ancillaryServices: { [key: string]: string }[];
   totalAmount: number;
   reissueDifferenceAmount: number;
+};
+
+export type loyaltyInfo = {
+  id: string
+  airlineCode: string
+  receivingCarrierCode: string
+  loyaltyNumber: string
+  tierStatus: string
+  tierStatusDetail: string
+  sabreTierStatus: string
+  oneWorldTierStatus: string
+  oneWorldSabreTierStatus: string
 };
 
 export type ServiceRequest = {
