@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs/promises";
 const settingsPath = process.env.APPSETTINGS_PATH ?? "/data/appsettings/appsettings.json";
 
 export type AppSettings = {
@@ -10,7 +10,8 @@ export type AppSettings = {
         appid: string
       }
     }
-  }
+  },
+  resultSavePath: string | undefined
 };
 
 export type Env = {
@@ -32,7 +33,7 @@ export async function getAppSettings(): Promise<AppSettings> {
     return settings;
   }
 
-  const data = fs.readFileSync(settingsPath, 'utf8');
+  const data = await fs.readFile(settingsPath, 'utf8');
   settings = JSON.parse(data) as AppSettings;
   return settings;
 }
