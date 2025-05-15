@@ -23,34 +23,18 @@
 <SearchForm onReservationResult={handleReservationResult} onTicketsResult={handleTicketResult} />
 
 {#each details as { segments, passengers, genericServiceRequests }}
-  <div class="result">
     <Segments {segments} />
     <Passengers {passengers} />
     <ServiceRequests genericRequests={genericServiceRequests} passengerRequests={passengers.flatMap(p => p.serviceRequests)}/>
-    <!-- <CollapsibleCard title={`Itinerary - ${bookingDetails.recordLocator}`}>
-      <BookingDetails data={bookingDetails} />
-      <Remarks {remarks} />
-
-      <h2>Extra Info</h2>
-      <CollapsibleCard title={"Remainder"}>
-        <Nest value={detail} />
-      </CollapsibleCard>
-    </CollapsibleCard> -->
-  </div>
 {/each}
 
 {#if tickets}
-  <div class="result">
     <h2>Tickets</h2>
     <TicketDetails details={tickets} />
-  </div>
 {/if}
 
 <style lang="scss">
   h1 {
     text-align: center;
-  }
-  .result {
-    padding: 1rem;
   }
 </style>
