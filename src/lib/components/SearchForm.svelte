@@ -5,8 +5,8 @@
   import { onMount } from "svelte";
   import type { TicketDetail } from "$lib/tickets";
   import BigButton from "./BigButton.svelte";
-    import type { ChangeEventHandler } from "svelte/elements";
-    import { evaluate } from "$lib/http-response-helpers";
+  import type { ChangeEventHandler } from "svelte/elements";
+  import { evaluate } from "$lib/http-response-helpers";
 
   export let onReservationResult: (result: ReservationDetail[]) => void;
   export let onTicketsResult: (tickets: TicketDetail[]) => void;
@@ -82,7 +82,7 @@
       {/each}
     </select>
 
-    <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf}>
+    <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf} onkeydown={handleKeypress}>
       <Slot name="label">CONF CODE</Slot>
       <Slot name="helptext">Enter the confirmation code</Slot>
     </CustomInput>

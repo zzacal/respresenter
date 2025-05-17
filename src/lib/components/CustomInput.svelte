@@ -1,19 +1,21 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+    import type { KeyboardEventHandler } from 'svelte/elements';
   type InputProps =  {
     required?: boolean, 
     bordered?: boolean,
     placeholder?: string,
     value?: string,
-    children?: Snippet 
+    children?: Snippet,
+    onkeydown: KeyboardEventHandler<EventTarget>;
   }
   
-  let { value = $bindable(), children, bordered, placeholder, required }: InputProps = $props();
-  const blurHandler = (e: any) => {
+  let { value = $bindable(), placeholder, required, onkeydown }: InputProps = $props();
+  const changeHandler = (e: any) => {
     value = e.target.value;
   }
 </script>
-<input type="text" placeholder={placeholder} required={required} value={value} onblur={blurHandler} />
+<input type="text" placeholder={placeholder} required={required} value={value} onchange={changeHandler} {onkeydown}/>
 
 <style lang="scss">
   @use "../../colors.scss" as colors;
