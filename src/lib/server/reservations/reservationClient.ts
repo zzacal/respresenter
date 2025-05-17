@@ -3,11 +3,11 @@ import { hoard } from "../data-hoarder";
 import { getApimSettings } from "../appsettings";
 import pkg from "lodash";
 import type { TicketResponse } from "$lib/tickets";
+import { isSuccessStatus } from "$lib/http-response-helpers";
 const { camelCase } = pkg;
-
 const getReservation =
   (env: string) =>
-  async (conf: string, isDcsIncluded: boolean): Promise<ReservationResponse> => {
+  async (conf: string, isDcsIncluded: boolean): Promise<ReservationResponse | undefined> => {
     const { baseUrl, key, appid } = await getApimSettings(env);
     const url = `${baseUrl}/aag/3/guestServices/reservations/reservation/${conf}?withDCSPassengerData=${isDcsIncluded}`;
     const response = await fetch(url, {
@@ -16,14 +16,17 @@ const getReservation =
         "asgds-appid": appid
       }
     });
-    const content = await response.json();
-		await hoard(`reservation/${conf}.json`, JSON.stringify(content));
-    return content;
+
+    if(isSuccessStatus(response.status)) {
+      const content = await response.json();
+      await hoard(`reservation/${conf}.json`, JSON.stringify(content));
+      return content;
+    }
   };
 
 const getTickets =
   (env: string) =>
-  async (ticketsNums: string[]): Promise<TicketResponse> => {
+  async (ticketsNums: string[]): Promise<TicketResponse | undefined> => {
     const { baseUrl, key, appid } = await getApimSettings(env);
     const ticketParam = ticketsNums.map((t) => `ticketNumbers=${t.split("-")[0]}`).join("&");
     const url = `${baseUrl}/aag/1/guestServices/ticketing/reservations/tickets?ticketingProvider=AS&${ticketParam}`;
@@ -33,11 +36,14 @@ const getTickets =
         "asgds-appid": appid
       }
     });
-    const content = await response.json();
-		await hoard(`tickets/${ticketParam}.json`, JSON.stringify(content));
 
-    const camelized = camelizeKeys(content);
-    return camelized as TicketResponse;
+    if(isSuccessStatus(response.status)) {
+      const content = await response.json();
+      await hoard(`tickets/${ticketParam}.json`, JSON.stringify(content));
+  
+      const camelized = camelizeKeys(content);
+      return camelized as TicketResponse;
+    }
   };
 
 export interface ReservationResponse {
@@ -61,7 +67,7 @@ type KeyValuable =
     }
   | Array<KeyValuable>;
 
-const camelizeKeys = (obj: KeyValuable): any => {
+const camelizeKeys = (obj: KeyValuable): unknown => {
   if (Array.isArray(obj)) {
     return obj.map((v) => camelizeKeys(v));
   } else if (obj != null && obj.constructor === Object) {

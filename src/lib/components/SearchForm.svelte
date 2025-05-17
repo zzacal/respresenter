@@ -6,6 +6,7 @@
   import type { TicketDetail } from "$lib/tickets";
   import BigButton from "./BigButton.svelte";
     import type { ChangeEventHandler } from "svelte/elements";
+    import { evaluate } from "$lib/http-response-helpers";
 
   export let onReservationResult: (result: ReservationDetail[]) => void;
   export let onTicketsResult: (tickets: TicketDetail[]) => void;
@@ -24,6 +25,8 @@
   }
 
   async function handleSearch() {
+    onReservationResult([]);
+    onTicketsResult([]);
     searching = true;
     if (env && conf) {
       const reservationResponse = await fetch("/api/reservation/", {
@@ -33,25 +36,27 @@
           "content-type": "application/json"
         }
       });
+      
+      const reservationResult = await evaluate<ReservationDetail[]>(await reservationResponse);
+      if(reservationResult.success) {
+        onReservationResult(reservationResult.body);
+        const ticketNums = reservationResult.body
+          .flatMap((r) => r.ticketingInfo.ticketDetails)
+          .map((d) => d.ticketNumber);
+  
+        const ticketResponse = await fetch("/api/tickets/", {
+          method: "POST",
+          body: JSON.stringify({ env, ticketNums }),
+          headers: {
+            "content-type": "application/json"
+          }
+        });
 
-      const reservationResult = (await reservationResponse.json()) as ReservationDetail[];
-      onReservationResult(reservationResult);
-
-      const ticketNums = reservationResult
-        .flatMap((r) => r.ticketingInfo.ticketDetails)
-        .map((d) => d.ticketNumber);
-
-      const ticketResponse = await fetch("/api/tickets/", {
-        method: "POST",
-        body: JSON.stringify({ env, ticketNums }),
-        headers: {
-          "content-type": "application/json"
+        const ticketResult = await evaluate<TicketDetail[]>(ticketResponse);
+        if(ticketResult.success) {
+          onTicketsResult(ticketResult.body);
         }
-      });
-
-      const ticketResult = (await ticketResponse.json()) as TicketDetail[];
-
-      onTicketsResult(ticketResult);
+      }
     }
     searching = undefined;
   }

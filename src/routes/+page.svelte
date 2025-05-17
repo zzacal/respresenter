@@ -28,7 +28,7 @@
     <ServiceRequests genericRequests={genericServiceRequests} passengerRequests={passengers.flatMap(p => p.serviceRequests)}/>
 {/each}
 
-{#if tickets}
+{#if tickets && tickets.length > 1}
     <h2>Tickets</h2>
     <TicketDetails details={tickets} />
 {/if}
