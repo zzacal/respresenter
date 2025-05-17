@@ -1,18 +1,26 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
   import Card from "./Card.svelte";
+  import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+  import Icon from "./Icon.svelte";
+  import type { Snippet } from "svelte";
 
   type CollapsibleCardProps = {
-    title: string,
-    children?: Snippet
+    title: string;
+    icon?: IconDefinition;
+    children?: Snippet;
   };
 
-  let { title, children }: CollapsibleCardProps = $props();
+  let { title, icon, children }: CollapsibleCardProps = $props();
 </script>
 
 <Card padding="none">
   <details>
-    <summary>{title}</summary>
+    <summary>
+      {#if icon}
+        <Icon {icon} />
+      {/if}
+      {title}
+    </summary>
     <div class="body">
       {@render children?.()}
     </div>
