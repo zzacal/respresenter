@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Ticket } from "$lib/tickets";
+    import { faCalendarCheck, faCreditCard, faMoneyBill1 } from "@fortawesome/free-regular-svg-icons";
   import Card from "../Card.svelte";
   import CollapsibleCard from "../CollapsibleCard.svelte";
   import Diel from "../Diel.svelte";
@@ -19,13 +20,11 @@
   } = ticket;
 </script>
 
-<CollapsibleCard title={`Ticket - ${originCity} -> ${destinationCity} - ${firstName} ${lastName}`}>
-  <Card>
-    <h3>Amount</h3>
+<CollapsibleCard icon={faCalendarCheck} title={`Ticket - ${originCity} -> ${destinationCity} - ${firstName} ${lastName}`}>
+  <Card icon={faMoneyBill1} title="Amount">
       <Diel keyvals={{currencyCode, value}} />
   </Card>
-  <Card>
-    <h3>Card</h3>
+  <Card icon={faCreditCard} title="Card">
     {#each payment as pay}
       <PaymentDetails payment={pay} />
     {/each}

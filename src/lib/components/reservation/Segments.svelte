@@ -3,7 +3,7 @@
 	import Card from "../Card.svelte";
 	import Diel from "../Diel.svelte";
 	import CollapsibleCard from "../CollapsibleCard.svelte";
-
+    import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
   type SegmentsProp = {
     segments: Segment[]
   }
@@ -27,7 +27,7 @@
       ...segment}
     }
 
-    <CollapsibleCard title={`${departureAirport} -> ${arrivalAirport} | ${operatingAirlineShortName} ${operatingAirlineCode}${operatingFlightNumber} | ${operatingClassOfService}`}>
+    <CollapsibleCard icon={faPaperPlane} title={`${departureAirport} -> ${arrivalAirport} | ${operatingAirlineShortName} ${operatingAirlineCode}${operatingFlightNumber} | ${operatingClassOfService}`}>
       <Diel keyvals={segment}/>
 
       <div class="seats">

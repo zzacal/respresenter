@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { GenericServiceRequest, ServiceRequest } from "$lib/details";
+    import { faComments, faIdBadge } from "@fortawesome/free-regular-svg-icons";
     import CollapsibleCard from "../CollapsibleCard.svelte";
     import Diel from "../Diel.svelte";
 
@@ -9,13 +10,13 @@
 
 <h2>Generic Service Requests</h2>
 {#each genericRequests as request }
-  <CollapsibleCard title={`${request.type} - ${request.freeText}`}>
+  <CollapsibleCard icon={faComments} title={`${request.type} - ${request.freeText}`}>
     <Diel keyvals={request} />
   </CollapsibleCard>
 {/each}
 <h2>Passenger Service Requests</h2>
 {#each passengerRequests as request }
-  <CollapsibleCard title={`${request.type} - ${request.freeText}`}>
+  <CollapsibleCard icon={faIdBadge} title={`${request.type} - ${request.freeText}`}>
     <Diel keyvals={request} />
   </CollapsibleCard>
 {/each}
