@@ -5,7 +5,9 @@
   import TicketDetails from "$lib/components/tickets/TicketDetails.svelte";
   import type { ReservationDetail } from "$lib/details";
   import type { TicketDetail } from "$lib/tickets";
-    import ServiceRequests from "$lib/components/reservation/ServiceRequests.svelte";
+  import ServiceRequests from "$lib/components/reservation/ServiceRequests.svelte";
+  import BookingDetails from "$lib/components/reservation/BookingDetails.svelte";
+  import Seats from "$lib/components/reservation/Seats.svelte";
   let details: ReservationDetail[] = [];
 
   let tickets: TicketDetail[];
@@ -19,18 +21,23 @@
   }
 </script>
 
-<h1>Reservation Search</h1>
+<h1>Sabr&eacute;</h1>
 <SearchForm onReservationResult={handleReservationResult} onTicketsResult={handleTicketResult} />
 
-{#each details as { segments, passengers, genericServiceRequests }}
-    <Segments {segments} />
-    <Passengers {passengers} />
-    <ServiceRequests genericRequests={genericServiceRequests} passengerRequests={passengers.flatMap(p => p.serviceRequests)}/>
+{#each details as { segments, passengers, genericServiceRequests, bookingDetails }}
+  <BookingDetails details={bookingDetails} />
+  <Segments {segments} />
+  <Passengers {passengers} />
+  <Seats seats={segments.flatMap((s) => s.seats)} {passengers} />
+  <ServiceRequests
+    genericRequests={genericServiceRequests}
+    passengerRequests={passengers.flatMap((p) => p.serviceRequests)}
+  />
 {/each}
 
 {#if tickets && tickets.length > 1}
-    <h2>Tickets</h2>
-    <TicketDetails details={tickets} />
+  <h2>Tickets</h2>
+  <TicketDetails details={tickets} />
 {/if}
 
 <style lang="scss">
