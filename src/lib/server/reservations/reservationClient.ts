@@ -1,10 +1,12 @@
 import type { ReservationDetail } from "$lib/details";
 import { hoard } from "../data-hoarder";
 import { getApimSettings } from "../appsettings";
-import pkg from "lodash";
 import type { TicketResponse } from "$lib/tickets";
 import { isSuccessStatus } from "$lib/http-response-helpers";
-const { camelCase } = pkg;
+import { recase } from "$lib/recase";
+
+const camelize = recase("camel");
+
 const getReservation =
   (env: string) =>
   async (conf: string, isDcsIncluded: boolean): Promise<ReservationResponse | undefined> => {
@@ -41,7 +43,7 @@ const getTickets =
       const content = await response.json();
       await hoard(`tickets/${ticketParam}.json`, JSON.stringify(content));
   
-      const camelized = camelizeKeys(content);
+      const camelized = camelize(content);
       return camelized as TicketResponse;
     }
   };
@@ -60,24 +62,3 @@ export const reservationClient = (env: string) => ({
   getReservation: getReservation(env),
   getTickets: getTickets(env)
 });
-
-type KeyValuable =
-  | {
-      [key: string]: KeyValuable;
-    }
-  | Array<KeyValuable>;
-
-const camelizeKeys = (obj: KeyValuable): unknown => {
-  if (Array.isArray(obj)) {
-    return obj.map((v) => camelizeKeys(v));
-  } else if (obj != null && obj.constructor === Object) {
-    return Object.keys(obj).reduce(
-      (result, key) => ({
-        ...result,
-        [camelCase(key)]: camelizeKeys(obj[key])
-      }),
-      {}
-    );
-  }
-  return obj;
-};
