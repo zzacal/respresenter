@@ -2,8 +2,7 @@
 	import type { Snippet } from 'svelte';
     import type { KeyboardEventHandler } from 'svelte/elements';
   type InputProps =  {
-    required?: boolean, 
-    bordered?: boolean,
+    required?: boolean,
     placeholder?: string,
     value?: string,
     children?: Snippet,
@@ -15,7 +14,7 @@
     value = e.target.value;
   }
 </script>
-<input type="text" placeholder={placeholder} required={required} value={value} onchange={changeHandler} {onkeydown}/>
+<input type="text" {placeholder} {required} {value} onchange={changeHandler} {onkeydown}/>
 
 <style lang="scss">
   @use "../../colors.scss" as colors;

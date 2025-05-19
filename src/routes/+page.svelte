@@ -8,12 +8,17 @@
   import ServiceRequests from "$lib/components/reservation/ServiceRequests.svelte";
   import BookingDetails from "$lib/components/reservation/BookingDetails.svelte";
   import Seats from "$lib/components/reservation/Seats.svelte";
-  let details: ReservationDetail[] = [];
+    import Skeleton from "$lib/components/Skeleton.svelte";
+    import Card from "$lib/components/Card.svelte";
 
-  let tickets: TicketDetail[];
+  let reservations: ReservationDetail[] = [];
+  let reservationIsLoading: boolean = false;
+
+  let tickets: TicketDetail[] = [];
+  let isTicketsLoading: boolean = false;
 
   function handleReservationResult(result: ReservationDetail[]) {
-    details = result;
+    reservations = result;
   }
 
   function handleTicketResult(result: TicketDetail[]) {
@@ -22,20 +27,41 @@
 </script>
 
 <h1>Sabr&eacute;</h1>
-<SearchForm onReservationResult={handleReservationResult} onTicketsResult={handleTicketResult} />
+<SearchForm 
+  onReservationResult={handleReservationResult}
+  onTicketsResult={handleTicketResult}
+  onReservationSearchEvent={(isSearching) => reservationIsLoading = isSearching} 
+  onTicketSearchEvent={(isSearching) => isTicketsLoading = isSearching} />
 
-{#each details as { segments, passengers, genericServiceRequests, bookingDetails }}
-  <BookingDetails details={bookingDetails} />
-  <Segments {segments} />
-  <Passengers {passengers} />
-  <Seats seats={segments.flatMap((s) => s.seats)} {passengers} />
-  <ServiceRequests
-    genericRequests={genericServiceRequests}
-    passengerRequests={passengers.flatMap((p) => p.serviceRequests)}
-  />
-{/each}
+{#if reservationIsLoading}
+  <br />
+  {#each [1,2,3] as num}    
+    <Skeleton style="height: 2.7rem;"/>
+    <Card>
+      <Skeleton style="width: 40%; height: 1.5rem;"/>
+    </Card>
+  {/each}
+{:else}
+  {#each reservations as { segments, passengers, genericServiceRequests, bookingDetails }}
+    <BookingDetails details={bookingDetails} />
+    <Segments {segments} />
+    <Passengers {passengers} />
+    <Seats seats={segments.flatMap((s) => s.seats)} {passengers} />
+    <ServiceRequests
+      genericRequests={genericServiceRequests}
+      passengerRequests={passengers.flatMap((p) => p.serviceRequests)}
+    />
+  {/each}
+{/if}
 
-{#if tickets && tickets.length > 1}
+{#if isTicketsLoading}
+  <br />
+  <Skeleton style="height: 2.7rem;"/>
+  <Card>
+    <Skeleton style="width: 10%; height: .5rem;"/><br />
+    <Skeleton style="width: 41%;"/>
+  </Card>
+{:else if tickets.length > 1}
   <h2>Tickets</h2>
   <TicketDetails details={tickets} />
 {/if}

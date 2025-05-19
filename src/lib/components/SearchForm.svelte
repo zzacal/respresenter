@@ -11,6 +11,9 @@
   export let onReservationResult: (result: ReservationDetail[]) => void;
   export let onTicketsResult: (tickets: TicketDetail[]) => void;
 
+  export let onReservationSearchEvent: ((isSearching: boolean) => void) | undefined = undefined;
+  export let onTicketSearchEvent: ((isSearching: boolean) => void) | undefined = undefined;
+
   let env: string = "";
   let conf: string = "OWAOCC";
   let searching: boolean | undefined;
@@ -29,6 +32,7 @@
     onTicketsResult([]);
     searching = true;
     if (env && conf) {
+      onReservationSearchEvent && onReservationSearchEvent(true);
       const reservationResponse = await fetch("/api/reservation/", {
         method: "POST",
         body: JSON.stringify({ env, conf }),
@@ -36,14 +40,16 @@
           "content-type": "application/json"
         }
       });
-      
+      onReservationSearchEvent && onReservationSearchEvent(false);
+
       const reservationResult = await evaluate<ReservationDetail[]>(await reservationResponse);
-      if(reservationResult.success) {
+      if (reservationResult.success) {
         onReservationResult(reservationResult.body);
         const ticketNums = reservationResult.body
           .flatMap((r) => r.ticketingInfo.ticketDetails)
           .map((d) => d.ticketNumber);
-  
+        
+        onTicketSearchEvent && onTicketSearchEvent(true);
         const ticketResponse = await fetch("/api/tickets/", {
           method: "POST",
           body: JSON.stringify({ env, ticketNums }),
@@ -51,9 +57,10 @@
             "content-type": "application/json"
           }
         });
+        onTicketSearchEvent && onTicketSearchEvent(false);
 
         const ticketResult = await evaluate<TicketDetail[]>(ticketResponse);
-        if(ticketResult.success) {
+        if (ticketResult.success) {
           onTicketsResult(ticketResult.body);
         }
       }
@@ -67,9 +74,9 @@
     }
   }
 
-  const onEnvChange:  ChangeEventHandler<HTMLSelectElement> = ({ currentTarget: {value}}) => {
+  const onEnvChange: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget: { value } }) => {
     env = value;
-  }
+  };
 
   onMount(getEnvironments);
 </script>
@@ -82,7 +89,12 @@
       {/each}
     </select>
 
-    <CustomInput bordered required placeholder="CONFIRMATION CODE" bind:value={conf} onkeydown={handleKeypress}>
+    <CustomInput
+      required
+      placeholder="CONFIRMATION CODE"
+      bind:value={conf}
+      onkeydown={handleKeypress}
+    >
       <Slot name="label">CONF CODE</Slot>
       <Slot name="helptext">Enter the confirmation code</Slot>
     </CustomInput>
@@ -90,6 +102,7 @@
     <BigButton
       label="Search"
       loading={searching}
+      disabled={searching}
       onclick={handleSearch}
       onkeydown={handleKeypress}
     />

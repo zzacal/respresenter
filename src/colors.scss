@@ -1,5 +1,6 @@
 $white: #fff;
 $bright: #eee;
+$gray: #999;
 $dark: #555;
 $black: #222;
 
@@ -13,6 +14,9 @@ $background-color: $bright ;
 $button-font-color: $bright;
 $button-background-color: $secondary;
 $button-border-color: $tertiary;
+$button-disabled-font-color: $bright;
+$button-disabled-background-color: $gray;
+$button-disabled-border-color: $gray;
 
 $input-background-color: $white;
 $input-border-color: $tertiary;
