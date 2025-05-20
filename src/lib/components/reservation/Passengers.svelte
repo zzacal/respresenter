@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Passenger } from "$lib/details";
+    import Card from "../Card.svelte";
   import CollapsibleCard from "../CollapsibleCard.svelte";
   import Diel from "../Diel.svelte";
   import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -17,13 +18,17 @@
 {#each passengers as { firstName, lastName, serviceRequests, apisDocuments, ancillaryServices, loyaltyInfo, ...passenger }}
   <CollapsibleCard title={`${firstName} ${lastName}`} icon={faUser}>
     <Diel keyvals={passenger} />
-    <h3>Loyalty Info</h3>
-    {#each loyaltyInfo as loyalty}
-      <Diel keyvals={loyalty} />
-    {/each}
-    <h3>Ancillary Services</h3>
-    {#each ancillaryServices as service}
-      <Diel keyvals={service} />
-    {/each}
+
+    <Card title="Loyalty">
+      {#each loyaltyInfo as loyalty}
+        <Diel keyvals={loyalty} />
+      {/each}
+    </Card>
+    
+    <Card title="Ancillary Services">
+      {#each ancillaryServices as service}
+        <Diel keyvals={service} />
+      {/each}
+    </Card>
   </CollapsibleCard>
 {/each}
