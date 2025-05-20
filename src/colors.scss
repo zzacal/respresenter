@@ -8,8 +8,13 @@ $primary: #0074c8;
 $secondary: #054687;
 $tertiary: #054687;
 
+$danger: #b81919;
+$danger-soft: rgb(240, 220, 220);
+
 $font-color: $dark;
 $background-color: $bright ;
+
+$error-font-color: $danger;
 
 $button-font-color: $bright;
 $button-background-color: $secondary;
@@ -20,6 +25,8 @@ $button-disabled-border-color: $gray;
 
 $input-background-color: $white;
 $input-border-color: $tertiary;
+$input-error-background-color: $danger-soft;
+$input-error-border-color: $danger;
 
 $elevated-background-color: $bright;
 

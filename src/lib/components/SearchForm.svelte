@@ -90,10 +90,13 @@
     </select>
 
     <CustomInput
+      name="confirmation-code"
+      id="confirmation-code"
       required
       placeholder="CONFIRMATION CODE"
       bind:value={conf}
       onkeydown={handleKeypress}
+      maxlength={6}
     >
       <Slot name="label">CONF CODE</Slot>
       <Slot name="helptext">Enter the confirmation code</Slot>
