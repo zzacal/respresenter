@@ -61,7 +61,7 @@
     <Skeleton style="width: 10%; height: .5rem;"/><br />
     <Skeleton style="width: 41%;"/>
   </Card>
-{:else if tickets.length > 1}
+{:else if tickets.length > 0}
   <h2>Tickets</h2>
   <TicketDetails details={tickets} />
 {/if}
