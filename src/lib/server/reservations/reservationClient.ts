@@ -21,7 +21,7 @@ const getReservation =
 
     if(isSuccessStatus(response.status)) {
       const content = await response.json();
-      await hoard(`reservation/${conf}.json`, JSON.stringify(content));
+      await hoard(`reservation/${(new Date()).toISOString().slice(0,10)}-${conf}.json`, JSON.stringify(content));
       return content;
     }
   };
@@ -41,7 +41,7 @@ const getTickets =
 
     if(isSuccessStatus(response.status)) {
       const content = await response.json();
-      await hoard(`tickets/${ticketParam}.json`, JSON.stringify(content));
+      await hoard(`tickets/${(new Date()).toISOString().slice(0,10)}-${ticketParam}.json`, JSON.stringify(content));
   
       const camelized = camelize(content);
       return camelized as TicketResponse;

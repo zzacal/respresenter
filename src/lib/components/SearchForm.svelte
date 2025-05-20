@@ -15,7 +15,7 @@
   export let onTicketSearchEvent: ((isSearching: boolean) => void) | undefined = undefined;
 
   let env: string = "";
-  let conf: string = "OWAOCC";
+  let conf: string = "";
   let searching: boolean | undefined;
   let envs: string[] | undefined;
 

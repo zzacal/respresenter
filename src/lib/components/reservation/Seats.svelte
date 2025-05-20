@@ -14,10 +14,11 @@
   }
 </script>
 
+<h2>Seats</h2>
 {#each zip(seats, passengers) as [{ seatNumber, nameAssociationId, boardPoint, offPoint, ...seat }, passenger]}
   <CollapsibleCard
     icon={faCouch}
-    title={`${seatNumber} ${boardPoint} - ${offPoint} ${passenger?.firstName} ${passenger?.lastName}`}
+    title={`${seatNumber} | ${boardPoint} - ${offPoint} | ${passenger?.firstName} ${passenger?.lastName}`}
   >
     <Diel keyvals={{ ...seat }} />
   </CollapsibleCard>

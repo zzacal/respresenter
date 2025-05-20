@@ -18,22 +18,5 @@
     title={`${departureAirport} -> ${arrivalAirport} | ${operatingAirlineShortName} ${operatingAirlineCode}${operatingFlightNumber} | ${operatingClassOfService}`}
   >
     <Diel keyvals={segment} />
-
-    <div class="seats">
-      {#each seats as { seatNumber, ...seat }}
-        <div class="seat">
-          <Card>
-            <h5>{seatNumber}</h5>
-            <Diel keyvals={seat} />
-          </Card>
-        </div>
-      {/each}
-    </div>
   </CollapsibleCard>
 {/each}
-
-<style lang="scss">
-  .seats {
-    display: flex;
-  }
-</style>
