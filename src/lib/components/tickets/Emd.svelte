@@ -8,6 +8,7 @@
 
   export let emd: Emd;
   const {
+    number,
     amounts,
     customers,
     details,
@@ -21,7 +22,7 @@
   } = emd;
 </script>
 
-<CollapsibleCard icon={faFileText} title={`EMD - ${coupons.map((c) => c.fee.description).join(", ")}`}>
+<CollapsibleCard icon={faFileText} title={`EMD ${number} - ${coupons.map((c) => c.fee.description).join(", ")}`}>
   <Card icon={faBookmark} title="Coupons">
     {#each coupons as coupon}
       {@const {

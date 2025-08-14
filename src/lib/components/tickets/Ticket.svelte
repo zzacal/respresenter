@@ -8,6 +8,7 @@
 
   export let ticket: Ticket;
   const {
+    number,
     amounts: {new: {total: {amount: {currencyCode, value}}}},
     customer: {traveler : {firstName, lastName}},
     details: { originCity, destinationCity},
@@ -20,7 +21,7 @@
   } = ticket;
 </script>
 
-<CollapsibleCard icon={faCalendarCheck} title={`Ticket - ${originCity} -> ${destinationCity} - ${firstName} ${lastName}`}>
+<CollapsibleCard icon={faCalendarCheck} title={`Ticket ${number} - ${originCity} -> ${destinationCity} - ${firstName} ${lastName}`}>
   <Card icon={faMoneyBill1} title="Amount">
       <Diel keyvals={{currencyCode, value}} />
   </Card>
