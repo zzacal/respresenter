@@ -35,7 +35,7 @@
 
 {#if reservationIsLoading}
   <br />
-  {#each [1,2,3] as num}    
+  {#each [1,2,3,4,5] as num}    
     <Skeleton style="height: 2.7rem;"/>
     <Card>
       <Skeleton style="width: 40%; height: 1.5rem;"/>
