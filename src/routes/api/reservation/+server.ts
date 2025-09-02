@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		if(!result || !result.reservationDetails) {
 			log.error("reservation not found", conf);
-			return error(404, {message: conf ?? ""});
+			return error(404, {message: `Not found: ${conf}`});
 		} else {
 			log.info("reservation found", conf);
 			return json(result.reservationDetails);

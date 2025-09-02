@@ -1,6 +1,6 @@
 <script lang="ts">
   import Passengers from "$lib/components/reservation/Passengers.svelte";
-  import SearchForm from "$lib/components/SearchForm.svelte";
+  import SearchForm, { type SearchResult } from "$lib/components/SearchForm.svelte";
   import Segments from "$lib/components/reservation/Segments.svelte";
   import TicketDetails from "$lib/components/tickets/TicketDetails.svelte";
   import type { ReservationDetail } from "$lib/details";
@@ -8,8 +8,9 @@
   import ServiceRequests from "$lib/components/reservation/ServiceRequests.svelte";
   import BookingDetails from "$lib/components/reservation/BookingDetails.svelte";
   import Seats from "$lib/components/reservation/Seats.svelte";
-    import Skeleton from "$lib/components/Skeleton.svelte";
-    import Card from "$lib/components/Card.svelte";
+  import Skeleton from "$lib/components/Skeleton.svelte";
+  import Card from "$lib/components/Card.svelte";
+  import Alert from "$lib/components/Alert.svelte";
 
   let reservations: ReservationDetail[] = [];
   let reservationIsLoading: boolean = false;
@@ -17,8 +18,19 @@
   let tickets: TicketDetail[] = [];
   let isTicketsLoading: boolean = false;
 
-  function handleReservationResult(result: ReservationDetail[]) {
-    reservations = result;
+  let error: string | null = null;
+
+  function handleReservationResult(result: SearchResult<ReservationDetail>) {
+    reservationIsLoading = false;
+    if (result.status === "SEARCHED" && result.success === true) {
+      reservations = result.results;
+    } else if (result.status === "SEARCHED" && result.success === false) {
+      console.log("Fail", result.reason)
+      reservations = [];
+      error = result.reason;
+    } else if (result.status === "SEARCHING") {
+      reservationIsLoading = true;
+    }
   }
 
   function handleTicketResult(result: TicketDetail[]) {
@@ -30,7 +42,6 @@
 <SearchForm 
   onReservationResult={handleReservationResult}
   onTicketsResult={handleTicketResult}
-  onReservationSearchEvent={(isSearching) => reservationIsLoading = isSearching} 
   onTicketSearchEvent={(isSearching) => isTicketsLoading = isSearching} />
 
 {#if reservationIsLoading}
@@ -41,6 +52,10 @@
       <Skeleton style="width: 40%; height: 1.5rem;"/>
     </Card>
   {/each}
+{:else if error != null}
+<div class="error">
+  <Alert type="ERROR" message={error} />
+</div>
 {:else}
   {#each reservations as { segments, passengers, genericServiceRequests, bookingDetails }}
     <BookingDetails details={bookingDetails} />
@@ -69,5 +84,9 @@
 <style lang="scss">
   h1 {
     text-align: center;
+  }
+
+  .error {
+    margin-top: 2rem;
   }
 </style>

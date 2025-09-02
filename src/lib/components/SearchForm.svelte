@@ -1,3 +1,17 @@
+<script context="module" lang="ts">
+  export type SearchResult<T> = {
+    status: "SEARCHED",
+    success: true,
+    results: T[]
+  } | {
+    status: "SEARCHED",
+    success: false,
+    reason: string
+  } | {
+    status: "SEARCHING"
+  }
+</script>
+
 <script lang="ts">
   import CustomInput from "$lib/components/CustomInput.svelte";
   import Slot from "$lib/components/Slot.svelte";
@@ -8,10 +22,9 @@
   import type { ChangeEventHandler } from "svelte/elements";
   import { evaluate } from "$lib/http-response-helpers";
 
-  export let onReservationResult: (result: ReservationDetail[]) => void;
+  export let onReservationResult: (result: SearchResult<ReservationDetail>) => void;
   export let onTicketsResult: (tickets: TicketDetail[]) => void;
 
-  export let onReservationSearchEvent: ((isSearching: boolean) => void) | undefined = undefined;
   export let onTicketSearchEvent: ((isSearching: boolean) => void) | undefined = undefined;
 
   let env: string = "";
@@ -28,11 +41,10 @@
   }
 
   async function handleSearch() {
-    onReservationResult([]);
-    onTicketsResult([]);
     searching = true;
     if (env && conf) {
-      onReservationSearchEvent && onReservationSearchEvent(true);
+      onTicketsResult([]);
+      onReservationResult({status: "SEARCHING"});
       const reservationResponse = await fetch("/api/reservation/", {
         method: "POST",
         body: JSON.stringify({ env, conf }),
@@ -40,11 +52,10 @@
           "content-type": "application/json"
         }
       });
-      onReservationSearchEvent && onReservationSearchEvent(false);
 
       const reservationResult = await evaluate<ReservationDetail[]>(await reservationResponse);
       if (reservationResult.success) {
-        onReservationResult(reservationResult.body);
+        onReservationResult({status: "SEARCHED", success: true, results: reservationResult.body});
         const ticketNums = reservationResult.body
           .flatMap((r) => r.ticketingInfo.ticketDetails)
           .map((d) => d.ticketNumber);
@@ -63,6 +74,8 @@
         if (ticketResult.success) {
           onTicketsResult(ticketResult.body);
         }
+      } else {
+        onReservationResult({status: "SEARCHED", success: false, reason: reservationResult.status == 404 ? `Not found: ${conf}` : "An error occurred"})
       }
     }
     searching = undefined;
